@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header.js';
 import Player from './Player.js'
+import AddPlayerForm from './AddPlayerForm.js'
 
 class App extends React.Component {
   state = {
@@ -28,6 +29,9 @@ class App extends React.Component {
     ]
   };
 
+  // Player Id Generator
+  prevPlayerId = 4;
+
   handleRemovePlayer = (id) => {
     this.setState( prevState => {
       return {
@@ -36,11 +40,21 @@ class App extends React.Component {
     });
   }
 
-  handleScoreChange = (delta) => {
-    /*this.setState( prevState => ({
-      score: prevState.score + 1
-    }));*/
-    console.log(delta);
+  handleScoreChange = (index, delta) => {
+    this.setState( prevState => ({
+      score: prevState.players[index].score += delta
+    }));
+  }
+
+  handleAddPlayer = (name) => {
+    this.setState(prevState => {
+      return {
+        players: [
+          ...prevState.players,
+          {name, score: 0, id: this.prevPlayerId += 1}
+        ]
+      }
+    })
   }
 
   render() {
@@ -48,20 +62,22 @@ class App extends React.Component {
       <div className="scoreboard">
         <Header 
           title="Scoreboard" 
-          totalPlayers={this.state.players.length} 
+          players={this.state.players} 
         />
   
         {/* Players list */}
-        {this.state.players.map( player =>
+        {this.state.players.map( (player,i) =>
           <Player 
             name={player.name}
             score={player.score}
             id={player.id}
             key={player.id.toString()} 
+            index={i}
             removePlayer={this.handleRemovePlayer}
             changeScore={this.handleScoreChange}
           />
         )}
+        <AddPlayerForm addPlayer={this.handleAddPlayer} />
       </div>
     );
   }
