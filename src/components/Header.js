@@ -2,14 +2,14 @@ import React from 'react';
 import Stats from './Stats';
 import StopWatch from './Stopwatch'
 
-const Header = (props) => {
+const Header = ({players,title}) => {
     return (
       <header>
-        <Stats players={props.players} />
-        <h1>{ props.title }</h1>
+        <Stats players={players} />
+        <h1>{ title }</h1>
         <StopWatch />
       </header>
     );
-  }
+}
 
 export default Header
