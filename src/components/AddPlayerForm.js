@@ -5,7 +5,6 @@ class AddPlayerForm extends Component {
         value: ''
     }
     handleValueChange = (e) => {
-        //console.log("Handle this value change ",e.target.value)
         this.setState({
             value: e.target.value
         })
