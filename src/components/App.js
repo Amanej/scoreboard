@@ -57,6 +57,21 @@ class App extends React.Component {
     })
   }
 
+  calcHighScore = () => {
+    return Math.max.apply(Math, this.state.players.map(p => {return p.score}))
+  }
+
+  hasHighScore = () => {
+    //return Math.max.apply(Math, player.map(p => {return p.score}))
+    /*
+    console.log('highestScore ',highestScore);
+    if(highestScore && player.score === highestScore) {
+      return true
+    } else {
+      return false
+    }*/
+  }
+
   render() {
     return (
       <div className="scoreboard">
@@ -65,16 +80,21 @@ class App extends React.Component {
         />
   
         {/* Players list */}
-        {this.state.players.map( (player,i) =>
-          <Player 
-            name={player.name}
-            score={player.score}
-            id={player.id}
-            key={player.id.toString()} 
-            index={i}
-            removePlayer={this.handleRemovePlayer}
-            changeScore={this.handleScoreChange}
-          />
+        {this.state.players.map( (player,i) => {
+            const hasHighScore = player.score ? (this.calcHighScore() === player.score) : false;
+            return (
+              <Player 
+                name={player.name}
+                score={player.score}
+                id={player.id}
+                key={player.id.toString()} 
+                hasHighScore={hasHighScore}
+                index={i}
+                removePlayer={this.handleRemovePlayer}
+                changeScore={this.handleScoreChange}
+              />
+            )
+          }
         )}
         <AddPlayerForm addPlayer={this.handleAddPlayer} />
       </div>

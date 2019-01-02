@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react'
 import Counter from './Counter.js';
+import HighScoreIcon from './HighScoreIcon.js'
 import PropTypes from 'prop-types'
 
 class Player extends PureComponent  {
@@ -12,6 +13,7 @@ class Player extends PureComponent  {
     index: PropTypes.number
   }
 
+  
   render() {
       const {
         name, 
@@ -19,12 +21,14 @@ class Player extends PureComponent  {
         id, 
         index,
         removePlayer, 
-        changeScore
+        changeScore,
+        hasHighScore
       } = this.props;
       return (
         <div className="player">
           <span className="player-name">
             <button className="remove-player" onClick={() => removePlayer(id)}>✖</button>
+            <HighScoreIcon highScore={hasHighScore} />
             { name }
           </span>
           <Counter score={score} changeScore={changeScore} index={index} />
